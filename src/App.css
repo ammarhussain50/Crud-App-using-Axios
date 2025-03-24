@@ -61,6 +61,8 @@ button:hover {
   -ms-border-radius: 0.6rem;
   -o-border-radius: 0.6rem;
   margin: 3.2rem auto;
+  display: flex;
+  justify-content: center;
 
   form {
     display: flex;

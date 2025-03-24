@@ -6,11 +6,11 @@ import Posts from './Componenets/Posts';
 
 
 function App() {
-  console.log( GetPost());
+  // console.log( GetPost());
 
   const getpostdata = async()=>{
     const res = await GetPost()
-    console.log(res.data);
+    // console.log(res.data);
     
   }
 

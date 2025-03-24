@@ -12,3 +12,7 @@ export const GetPost = ()=>{
 export const deletepost = (id)=>{
       return Api.delete(`/posts/${id}`)
 }
+
+export const PostApi = (post)=>{
+      return Api.post('/posts',post)
+}

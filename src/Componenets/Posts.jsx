@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from 'react'
 import { deletepost, GetPost } from '../API/PostApi';
 import "../App.css";
+import Form from './Form';
 
 const Posts = () => {
       const [Post, setPost] = useState([])
        const getpostdata = async()=>{
           const res = await GetPost()
-          console.log(res.data);
+      //     console.log(res.data);
           setPost(res.data)
           
         }
@@ -18,14 +19,17 @@ const Posts = () => {
                         return curpost.id !== id
                   })
                   setPost(newupdatedpost)
+            }else{
+                  console.log("failed to delete this:",rest.status);
+                  
             }
             }
             catch(error){
                   console.log(error);
                   
             }
-           const rest = await deletepost(id)
-           console.log(rest);
+      //      const rest = await deletepost(id)
+      //      console.log(rest);
            
         }
       
@@ -33,6 +37,10 @@ const Posts = () => {
           getpostdata()
         }, [])
   return (
+      <div>
+      <section className="section-form">
+            <Form Posts={Posts} setPost={setPost}/>
+      </section>
     <section className="section-post">
       <ol>
 
@@ -49,6 +57,7 @@ const Posts = () => {
      })}
       </ol>
     </section>
+      </div>
   )
 }
 
