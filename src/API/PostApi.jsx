@@ -16,3 +16,6 @@ export const deletepost = (id)=>{
 export const PostApi = (post)=>{
       return Api.post('/posts',post)
 }
+export const updatedata = (id,post)=>{
+      return Api.put(`/posts/${id}`,post)
+}

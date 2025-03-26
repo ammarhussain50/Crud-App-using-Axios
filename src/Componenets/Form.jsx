@@ -1,14 +1,24 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { PostApi } from '../API/PostApi'
 
-const Form = ({Posts,setPosts}) => {
+const Form = ({Posts,setPosts,updatedataapi,setupdatedataapi}) => {
       const [adddata, setadddata] = useState({
             
                   title : '',
                   body: '',
             
 })
+
+useEffect(() => {
+ updatedataapi && setadddata({
+      title : updatedataapi.title || '',
+      body : updatedataapi.body || ''
+ })
+}, [updatedataapi])
+
+let isEmpty = Object.keys(updatedataapi).length  === 0
+
 
       const handleInputChange = (e)=>{
             const name = e.target.name
@@ -23,11 +33,16 @@ const Form = ({Posts,setPosts}) => {
                   }
             })
       }
+
+      const updatepost = ()=>{
+            
+      }
+
       const addPost = async ()=>{
            const resp = await PostApi(adddata)
            console.log("res",resp);
            
-           if((resp.status == 200)){
+           if((resp.status = 200)){
             setPosts([...Posts,resp.data])
             setadddata({ title: "", body: "" });
            }
@@ -36,7 +51,13 @@ const Form = ({Posts,setPosts}) => {
 
       const handleFormSubmit = (e)=>{
             e.preventDefault()
-            addPost()
+            const action = e.nativeEvent.submitter.value;
+            if(action === 'Add'){
+                  addPost()
+            }
+            else if (action === 'Edit') {
+                  updatepost()
+            }
       }
   return (
       
@@ -66,8 +87,8 @@ const Form = ({Posts,setPosts}) => {
           onChange={handleInputChange}
         />
       </div>
-      <button type="submit" >
-        ggg
+      <button type="submit" value={isEmpty?  'Add' : 'Edit'} >{isEmpty?  'Add' : 'Edit'}
+       
       </button>
     </form>
   )
