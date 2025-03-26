@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import { PostApi } from '../API/PostApi'
+import { PostApi, updatedata } from '../API/PostApi'
 
 const Form = ({Posts,setPosts,updatedataapi,setupdatedataapi}) => {
       const [adddata, setadddata] = useState({
@@ -34,8 +34,25 @@ let isEmpty = Object.keys(updatedataapi).length  === 0
             })
       }
 
-      const updatepost = ()=>{
-            
+      const updatepost = async()=>{
+            try{
+
+                  const response = await updatedata(updatedataapi.id , adddata)
+                  console.log(response);
+
+                  setPosts((prev)=>{
+                        return prev.map((curele)=>{
+                              return curele.id == response.data.id ? response.data : curele
+                        })
+                  })
+                  setadddata({ title: "", body: "" });
+                  setupdatedataapi({})
+            }
+            catch(error){
+                  console.log(error);
+                  
+            }
+           
       }
 
       const addPost = async ()=>{
